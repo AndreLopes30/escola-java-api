@@ -1,5 +1,7 @@
 package com.andre.escola_api.controller;
 
+import com.andre.escola_api.dto.AlunoRequestDTO;
+import com.andre.escola_api.dto.AlunoResponseDTO;
 import com.andre.escola_api.model.Aluno;
 import com.andre.escola_api.service.AlunoService;
 import jakarta.validation.Valid;
@@ -29,9 +31,20 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<Aluno> salvar(@Valid @RequestBody Aluno aluno) {
+    public ResponseEntity<AlunoResponseDTO> salvar(@Valid @RequestBody AlunoRequestDTO dto) {
+        Aluno aluno = new Aluno();
+        aluno.setNome(dto.nome());
+        aluno.setNota(dto.nota());
+        aluno.setIdade(dto.idade());
+        aluno.setTurma(dto.turma());
         Aluno alunoSalvo = alunoService.salvar(aluno);
-        return ResponseEntity.status(HttpStatus.CREATED).body(alunoSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AlunoResponseDTO(
+                alunoSalvo.getId(),
+                alunoSalvo.getNome(),
+                alunoSalvo.getNota(),
+                alunoSalvo.getTurma(),
+                alunoSalvo.getIdade()
+        ));
     }
 
     @PutMapping("/{id}")
