@@ -1,6 +1,8 @@
 package com.andre.escola_api.model;
 
+import com.andre.escola_api.dto.DadosCadastroUsuario;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,9 @@ public class Usuario implements UserDetails {
 
     @Column(nullable = false)
     private String senha;
+
+    public Usuario(@Valid DadosCadastroUsuario dados) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
