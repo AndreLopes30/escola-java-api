@@ -14,7 +14,9 @@ public class AlunoService {
     private final AlunoRepository alunoRepository;
 
     public Aluno salvar(Aluno aluno) {
-
+        if (aluno.getNota() < 0 || aluno.getNota() > 10) {
+            throw new IllegalArgumentException("Nota inválida");
+        }
         return alunoRepository.save(aluno);
     }
 

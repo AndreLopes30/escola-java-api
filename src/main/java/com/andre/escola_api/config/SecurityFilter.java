@@ -39,9 +39,10 @@ import java.io.IOException;
 
         private String recuperarToken(HttpServletRequest request) {
             var authorizationHeader = request.getHeader("Authorization");
-            if (authorizationHeader != null) {
-                return authorizationHeader.replace("Bearer ", "").trim();
+
+            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ") || authorizationHeader.length() <= 7) {
+                return null;
             }
-            return null;
+            return authorizationHeader.replace("Bearer ", "").trim();
         }
     }

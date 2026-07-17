@@ -27,7 +27,19 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/login").permitAll()
+                        // 1. Libera os caminhos padrão do Swagger + os caminhos de recursos que ele injeta por baixo dos panos
+                        .requestMatchers(
+                                "/login",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.FORWARD, jakarta.servlet.DispatcherType.ERROR).permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -44,4 +56,4 @@ public class SecurityConfigurations {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    }
+}
