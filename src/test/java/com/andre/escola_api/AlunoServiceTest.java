@@ -1,3 +1,4 @@
+package com.andre.escola_api;
 
 import com.andre.escola_api.model.Aluno;
 import com.andre.escola_api.repository.AlunoRepository;
@@ -9,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,7 +50,7 @@ public class AlunoServiceTest {
         Mockito.verifyNoInteractions(alunoRepository);
     }
 
-    @Test
+    @org.testng.annotations.Test
     void buscarAlunoExistente() {
         Aluno aluno = new Aluno();
         aluno.setId(10L);
