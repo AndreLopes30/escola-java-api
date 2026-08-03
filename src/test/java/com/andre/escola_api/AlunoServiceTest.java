@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +38,6 @@ public class AlunoServiceTest {
         Assertions.assertEquals(10.0, resultado.getNota());
 
         Mockito.verify(alunoRepository).save(aluno);
-
     }
 
     @Test
@@ -82,14 +83,33 @@ public class AlunoServiceTest {
 
     @Test
     void excluirAluno() {
-    }
 
-    @Test
-    void salvarComNotaDez_deveSalvar() {
+        alunoService.deletarPorId(10L);
+
+        Mockito.verify(alunoRepository).deleteById(10L);
     }
 
     @Test
     void listarALunos() {
+        Aluno aluno1 = new Aluno();
+        aluno1.setNome("André");
+        aluno1.setNota(8.0);
+
+        Aluno aluno2 = new Aluno();
+        aluno2.setNome("João");
+        aluno2.setNota(3.5);
+
+        List<Aluno> alunosList = List.of(aluno1, aluno2);
+
+        Mockito.when(alunoRepository.findAll())
+                .thenReturn(alunosList);
+
+        List<Aluno> resultado = alunoService.listarTodos();
+
+        Assertions.assertEquals(2, resultado.size());
+        Assertions.assertEquals("André", resultado.get(0).getNome());
+
+        Mockito.verify(alunoRepository).findAll();
     }
 
 }
