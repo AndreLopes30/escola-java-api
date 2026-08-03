@@ -51,7 +51,7 @@ public class AlunoServiceTest {
         Mockito.verifyNoInteractions(alunoRepository);
     }
 
-    @org.testng.annotations.Test
+    @Test
     void buscarAlunoExistente() {
         Aluno aluno = new Aluno();
         aluno.setId(10L);
